@@ -13,6 +13,16 @@
 #include <stdlib.h>
 #include "thread.h"
 
+int potCount;
+int feedPots;
+int babyEag;
+int feedings;
+Semaphore * Queue;
+Semaphore * WakeMom;
+Semaphore * Eating;
+Semaphore * GetPot;
+
+
 using namespace std;
 
 // -----------------------------------------------------------
@@ -31,9 +41,11 @@ void printWrap(char buf[100]) {
 int main(int argc, char* argv[])
 {
     char buf[100];
-    int feedPots = 10;
-    int babyEag = 10;
-    int feedings = 10;
+    int m = 0;
+    // Default values will be 10
+    feedPots = 10;
+    babyEag = 10;
+    feedings = 10;
 
     if (argv[1] != "0")
     {
@@ -48,9 +60,40 @@ int main(int argc, char* argv[])
         feedings = atoi(argv[3]);
     }
 
+    // Set up Semaphores
+    potCount = 0;
+    Queue = new Semaphore("", 0);
+    WakeMom = new Semaphore("", 1);
+    Eating = new Semaphore("", feedPots);
+    GetPot = new Semaphore("", 1);
+
     sprintf(buf, "MAIN: There are %d baby eagles, %d feeding pots"
                  ", and %d feedings.\n", babyEag, feedPots, feedings);
     printWrap(buf);
+    sprintf(buf, "MAIN: Game starts!!!!!\n");
+    printWrap(buf);
+
+    // Start mom Thread
+    MotherEagle momEagle(feedings);
+    momEagle.Begin();
+    printf("Mom Started\n");
+
+    // Start baby threads
+    BabyEagle *babyEagles[babyEag];
+    for (m = 0; m < babyEag; m++)
+    {
+        babyEagles[m] = new BabyEagle();
+        babyEagles[m]->Begin();
+
+        printf("Baby number %d Started\n", m);
+    }
+
+    // wait for all child threads
+    momEagle.Join();
+   /* for (m = 0; m < babyEag; m++)
+    {
+        babyEagles[m]->Join();
+    }*/
 
     return 0;
 }

@@ -12,14 +12,14 @@ EXE_FILE = prog4
 ${EXE_FILE}: ${OBJ_FILE}
 	        ${CC} ${FLAGS}  -o ${EXE_FILE}  ${OBJ_FILE} ${TMLIB} -lpthread
 
+thread-support.o: thread-support.cpp
+	        ${CC} ${DFLAGS} ${IFLAGS} ${CFLAGS} -c thread-support.cpp
+		
 thread.o: thread.cpp
 	        ${CC} ${DFLAGS} ${IFLAGS} ${CFLAGS} -c thread.cpp
 
 thread-main.o: thread-main.cpp
 	        ${CC} ${DFLAGS} ${IFLAGS} ${CFLAGS} -c thread-main.cpp
-		
-thread-support.o: thread-support.cpp
-	        ${CC} ${DFLAGS} ${IFLAGS} ${CFLAGS} -c thread-support.cpp
 
 noVisual: ${OBJ_FILE}
 	        ${CC} ${FLAGS}  -o ${EXE_FILE}  ${OBJ_FILE} ${TMLIB_NV} -lpthread
