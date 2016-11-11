@@ -47,21 +47,22 @@ int main(int argc, char* argv[])
     babyEag = 10;
     feedings = 10;
 
-    if (argv[1] != "0")
+    if (atoi(argv[1]) != 0)
     {
         feedPots = atoi(argv[1]);
     }
-    if (argv[2] != "0")
+    if (atoi(argv[2]) != 0)
     {
         babyEag = atoi(argv[2]);
     }
-    if (argv[3] != "0")
+    if (atoi(argv[3]) != 0)
     {
         feedings = atoi(argv[3]);
     }
 
     // Set up Semaphores
     potCount = 0;
+    momDone = 0;
     Queue = new Semaphore("", 0);
     WakeMom = new Semaphore("", 1);
     Eating = new Semaphore("", feedPots);
@@ -76,24 +77,26 @@ int main(int argc, char* argv[])
     // Start mom Thread
     MotherEagle momEagle(feedings);
     momEagle.Begin();
-    printf("Mom Started\n");
+    sprintf(buf, "Mother eagle started.\n");
+    printWrap(buf);
 
     // Start baby threads
     BabyEagle *babyEagles[babyEag];
-    for (m = 0; m < babyEag; m++)
+    for (m = 1; m <= babyEag; m++)
     {
-        babyEagles[m] = new BabyEagle();
+        babyEagles[m] = new BabyEagle(m);
         babyEagles[m]->Begin();
 
-        printf("Baby number %d Started\n", m);
+        sprintf(buf, "Baby eagle %d Started.\n", m);
+        printWrap(buf);
     }
 
     // wait for all child threads
     momEagle.Join();
-   /* for (m = 0; m < babyEag; m++)
+    for (m = 1; m <= babyEag; m++)
     {
         babyEagles[m]->Join();
-    }*/
+    }
 
     return 0;
 }

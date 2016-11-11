@@ -12,6 +12,7 @@ extern Semaphore * Queue;
 extern Semaphore * WakeMom;
 extern Semaphore * Eating;
 extern Semaphore * GetPot;
+extern char momDone;
 extern int feedPots;
 extern int babyEag;
 extern int feedings;
@@ -38,17 +39,23 @@ class MotherEagle : public Thread
         int k;
         int j;
         int feed;
+        char buf[100];
         void ThreadFunc();
+        void printWrap(char*);
 };
 
 class BabyEagle : public Thread
 {
     public:
-        BabyEagle();
+        BabyEagle(int n);
         void ready_to_eat(void);
         void finish_eating(void);
 
     private:
         void ThreadFunc();
+        void printWrap(char*);
+        int num;
+        int m;
+        char buf[100];
 };
 
