@@ -11,6 +11,8 @@
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
+#include <stdlib.h>
 #include "thread.h"
 
 char momDone;
@@ -73,16 +75,26 @@ void MotherEagle::ThreadFunc()
 
     sprintf(buf, "Mother eagle started.\n");
     printWrap(buf);
+    int r;
 
     for (i = 0; i < feed; i++)
     {
         goto_sleep();
-        Delay();
-
+        srand(time(NULL));
+        r = rand() % 10;
+        for (k = 0; k < r; k++)
+        {
+            Delay();
+        }
         sprintf(buf, "Mother eagle says \"Feeding (%d)\"\n", i + 1);
         printWrap(buf);
         food_ready();
-        Delay();
+        srand(time(NULL));
+        r = rand() % 10;
+        for (k = 0; k < r; k++)
+        {
+            Delay();
+        }
 
     }
 
@@ -120,15 +132,26 @@ void BabyEagle::ThreadFunc()
 {
     Thread::ThreadFunc();
     char space = ' ';
+    int r;
     sprintf(buf, "%*c Baby eagle %d started.\n", num - 1, space, num);
     printWrap(buf);
 
     while (1) {
-        Delay();            // play for a while
+        srand(time(NULL));
+        r = rand() % 10;
+        for (k = 0; k < r; k++)
+        {
+            Delay();
+        }
         sprintf(buf, "%*c Baby eagle %d ready to eat.\n", num - 1, space, num);
         printWrap(buf);
         ready_to_eat();     // get hungry
-        Delay();            // eat for a while
+        srand(time(NULL));
+        r = rand() % 10;
+        for (k = 0; k < r; k++)
+        {
+            Delay();
+        }
                             // you may call Delay() multiple times
                             //(use a random number generate)
                             // to have a longer and more random delay.

@@ -47,6 +47,7 @@ class BabyEagle : public Thread
         void printWrap(char*);
         int num;
         int m;
+        int k;
         char buf[100];
 };
 
