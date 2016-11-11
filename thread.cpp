@@ -1,3 +1,13 @@
+// -----------------------------------------------------------
+// NAME : Zachary Hill                   User ID: zahill
+// DUE DATE : 11/11/2016
+// PROGRAM ASSIGNMENT #4
+// FILE NAME : thread.cpp
+// PROGRAM PURPOSE :
+//     Holds functionality of baby and mother eagle classes.
+//     Methods are implemented here
+// -----------------------------------------------------------
+
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
@@ -5,14 +15,28 @@
 
 char momDone;
 
-// Constructor
+// -----------------------------------------------------------
+// FUNCTION MotherEagle::MotherEagle :
+//    Constructor for the Mother eagle class
+// PARAMETER USAGE :
+//    f - number of feedings
+// FUNCTION CALLED :
+//    N/A
+// -----------------------------------------------------------
 MotherEagle::MotherEagle(int f)
              :feed(f)
 {
 
 }
 
-// Constructor
+// -----------------------------------------------------------
+// FUNCTION BabyEagle::BabyEagle :
+//    Constructor for the Baby eagle class
+// PARAMETER USAGE :
+//    n - baby eagle number
+// FUNCTION CALLED :
+//    N/A
+// -----------------------------------------------------------
 BabyEagle::BabyEagle(int n)
            :num(n)
 {
@@ -32,6 +56,17 @@ void MotherEagle::printWrap(char buf[100]) {
     write(1, buf, strlen(buf));
 }
 
+// -----------------------------------------------------------
+// FUNCTION MotherEagle::ThreadFunc :
+//    Function called by Begin(), controls the general flow
+//    of the Mother eagle, sleeping and feeding the babies
+// PARAMETER USAGE :
+//    N/A
+// FUNCTION CALLED :
+//    Delay()
+//    goto_sleep()
+//    food_ready()
+// -----------------------------------------------------------
 void MotherEagle::ThreadFunc()
 {
     Thread::ThreadFunc();
@@ -70,6 +105,17 @@ void BabyEagle::printWrap(char buf[100]) {
     write(1, buf, strlen(buf));
 }
 
+// -----------------------------------------------------------
+// FUNCTION BabyEagle::ThreadFunc :
+//    Function called by Begin(), controls the general flow
+//    of the baby eagle, eating and coming back
+// PARAMETER USAGE :
+//    N/A
+// FUNCTION CALLED :
+//    Delay()
+//    ready_to_eat()
+//    finish_eating()
+// -----------------------------------------------------------
 void BabyEagle::ThreadFunc()
 {
     Thread::ThreadFunc();

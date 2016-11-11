@@ -18,15 +18,6 @@ extern int babyEag;
 extern int feedings;
 extern int potCount;
 
-class MyThread : public Thread
-{
-    public:
-        MyThread(int n);
-
-    private:
-        void ThreadFunc();
-};
-
 class MotherEagle : public Thread
 {
     public:

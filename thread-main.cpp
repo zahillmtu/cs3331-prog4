@@ -4,7 +4,9 @@
 // PROGRAM ASSIGNMENT #4
 // FILE NAME : thread-main.cpp
 // PROGRAM PURPOSE :
-//
+//     Program is used to run and solve the Hungry Eagle
+//     "game". A game in which a mother eagle fills feeding
+//     pots and baby eagles eat from those pots.
 // -----------------------------------------------------------
 
 #include <iostream>
@@ -38,6 +40,19 @@ void printWrap(char buf[100]) {
     write(1, buf, strlen(buf));
 }
 
+// -----------------------------------------------------------
+// FUNCTION main :
+//    Creates child threads to slove the Hungry eagles
+//    problem. Initializes semaphores for thread control.
+//    Starts the "game".
+// PARAMETER USAGE :
+//    argv[1] - The number of feeding pots
+//    argv[2] - The number of Baby Eagles
+//    argv[3] - The number of feedings
+// FUNCTION CALLED :
+//    MotherEagle()
+//    BabyEagle()
+// -----------------------------------------------------------
 int main(int argc, char* argv[])
 {
     char buf[100];
@@ -77,8 +92,6 @@ int main(int argc, char* argv[])
     // Start mom Thread
     MotherEagle momEagle(feedings);
     momEagle.Begin();
-    sprintf(buf, "Mother eagle started.\n");
-    printWrap(buf);
 
     // Start baby threads
     BabyEagle *babyEagles[babyEag];
@@ -86,9 +99,6 @@ int main(int argc, char* argv[])
     {
         babyEagles[m] = new BabyEagle(m);
         babyEagles[m]->Begin();
-
-        sprintf(buf, "Baby eagle %d Started.\n", m);
-        printWrap(buf);
     }
 
     // wait for all child threads
