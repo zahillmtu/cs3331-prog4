@@ -2,4 +2,66 @@
 Hungry Eagles problem
 
 Question 1:
-    
+    Baby eagles must wait in a queue, controlled by a semaphore, to get a pot.
+    The semaphore is initialized with the number of pots to block any
+    eagle over the number of pots.
+
+Question 2:
+    The intial queue semaphore counts down from the number of feeding pots
+    to zero, when it reaches zero all feeding pots are taken by another
+    eagle or empty and the eagle is blocked. The queue is released by
+    the mother eagle when she refills the pots.
+
+Question 3:
+    If a pot is available, the queue semaphore contain a value larger
+    than 1, after calling wait() the eagle will be allowed to pass
+    through and receive a pot.
+
+Question 4:
+    Pots are given out sequentially to the baby eagle who arrives first,
+    after that pot has been assigned the next in line will be given.
+    This prevents the same one from being accessed until they are
+    refilled by the mother.
+
+Question 5:
+    Each eagle checks-in to get a pot one at a time in a mutex 
+    critical section which is controlled by a semaphore with value 
+    1. The potCount variable is controlled in this CS and refers to
+    which pot the eagle will receive.
+
+Question  6:
+    The last baby eagle, and only the last, will wake up the mother.
+    This is ensured because potCount == 0 must be true and potCount
+    is controlled in a mutex CS, so only one eagle could have
+    potCount == 0 be true.
+
+Question 7:
+    The first baby eagle through the queue will see that potCount is
+    zero and will wake up the mother.
+
+Question 8:
+    The only condition that allows the mother eagle to be woken up
+    is when a baby eagle enters it's critical section with a 
+    potCount equal to zero. This can only happen once in the Mutex
+    critical section.
+
+Question 9:
+    As a baby eagle gets a pot, it calls Wait() on the queue semaphore
+    which contains the number of pots available. After all pots have 
+    been used this semaphore will block all incoming baby eagles.
+    Signal() is not called on the semaphore until the mother eagle
+    has filled all the pots.
+
+Question 10:
+    The feeding and sleeping processes take place in a loop, after
+    feeding is done the process returns to the top of the loop and
+    automatically goes back to sleep.
+
+Question 11:
+    After the mother eagle finishes, if a baby eagle comes to get a
+    pot and cannot get one, it exits. All other baby eagles finish
+    eating or get a pot that isn't empty yet, then will come back, 
+    see there are no more pots, and exit. The main program joins()
+    with these threads so it does not exit.
+
+
